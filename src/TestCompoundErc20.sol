@@ -55,4 +55,19 @@ contract TestCompoundErc20 {
     function getCTokenBalance() external view returns (uint) {
         return cToken.balanceOf(address(this));
     }
+
+    /// @notice Retrieve the current exchange rate and supply rate per block from the Compound protocol
+    /// @dev This function calls the `exchangeRateCurrent` and `supplyRatePerBlock` functions on the cToken to get the latest values
+    /// @return exchangeRate The current exchange rate between the cToken and the underlying asset, scaled by 1e18
+    /// @return supplyRatePerBlock The current supply interest rate per block, scaled by 1e18
+    function getInfo()
+        external
+        returns (uint256 exchangeRate, uint256 supplyRatePerBlock)
+    {
+        // Get the latest exchange rate from the cToken
+        exchangeRate = cToken.exchangeRateCurrent();
+
+        // Get the current supply rate per block from the cToken
+        supplyRatePerBlock = cToken.supplyRatePerBlock();
+    }
 }
