@@ -48,4 +48,11 @@ contract TestCompoundErc20 {
         // Return the result of the mint operation (0 indicates success)
         return mintResult;
     }
+
+    /// @notice Get the current balance of cTokens held by this contract
+    /// @dev This function returns the cToken balance for the contract's address
+    /// @return The number of cTokens held by this contract
+    function getCTokenBalance() external view returns (uint) {
+        return cToken.balanceOf(address(this));
+    }
 }
