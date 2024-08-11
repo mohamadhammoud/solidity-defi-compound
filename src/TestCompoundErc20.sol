@@ -4,10 +4,10 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./interfaces/ICompound.sol";
 
-/// @title TestCompoundErc20 Contract
+/// @title CompoundSupplyManager Contract
 /// @notice This contract allows users to supply ERC20 tokens to the Compound protocol and receive cTokens in return.
 /// @dev The contract interacts with a specific ERC20 token and its corresponding cToken on the Compound protocol.
-contract TestCompoundErc20 {
+contract CompoundSupplyManager {
     /// @notice The underlying ERC20 token that will be supplied to the Compound protocol
     ERC20 public token;
 
