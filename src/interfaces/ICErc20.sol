@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 /// @title CErc20 Interface for Compound Protocol
 /// @dev This interface provides the main functions for interacting with Compound's CErc20 tokens.
 
-interface CErc20 {
+interface ICErc20 {
     /// @notice Get the current balance of a specified address's CErc20 tokens
     /// @param account The address to get the balance of
     /// @return The number of CErc20 tokens held by the address

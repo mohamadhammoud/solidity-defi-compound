@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./interfaces/ICompound.sol";
+import "./interfaces/ICErc20.sol";
 
 /// @title CompoundSupplyManager Contract
 /// @notice This contract allows users to supply ERC20 tokens to the Compound protocol and receive cTokens in return.
@@ -12,7 +12,7 @@ contract CompoundSupplyManager {
     ERC20 public token;
 
     /// @notice The cToken representing the supplied ERC20 token on the Compound protocol
-    CErc20 public cToken;
+    ICErc20 public cToken;
 
     /// @dev Error to indicate that minting cTokens failed
     error MintFailed();
@@ -25,7 +25,7 @@ contract CompoundSupplyManager {
     /// @param _cToken The address of the corresponding cToken on the Compound protocol (e.g., cDAI)
     constructor(address _token, address _cToken) {
         token = ERC20(_token);
-        cToken = CErc20(_cToken);
+        cToken = ICErc20(_cToken);
     }
 
     /// @notice Supply a specified amount of the ERC20 token to the Compound protocol
