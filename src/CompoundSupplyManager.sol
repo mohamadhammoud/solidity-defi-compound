@@ -2,7 +2,8 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./interfaces/ICErc20.sol";
+import "src/interfaces/ICErc20.sol";
+import "src/interfaces/IComptroller.sol";
 
 /// @title CompoundSupplyManager Contract
 /// @notice This contract allows users to supply ERC20 tokens to the Compound protocol and receive cTokens in return.
@@ -103,5 +104,51 @@ contract CompoundSupplyManager {
 
         // Return the result of the mint operation (0 indicates success)
         return redeemResult;
+    }
+
+    IComptroller comptroller =
+        IComptroller(0x922018674c12a7f0d394ebeef9b58f186cde13c1);
+    // IComptroller comptroller =
+    //     IComptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
+
+    function getCollateralFactor() external view returns (uint256) {
+        (bool isListed, uint collateralFactor, bool isComped) = comptroller
+            .markets(cToken);
+
+        return collateralFactor;
+    }
+
+    function getAccountLiquidity()
+        external
+        view
+        returns (uint256 liquidity, uint256 shortfall)
+    {
+        (uint _error, uint _liquidity, uint _shortfall) = comptroller
+            .getAccountLiquidity(address(this));
+
+        require(_error == 0, "Comptroller: error");
+
+        return (liquidity, shortfall);
+    }
+
+    function getPriceFeed(address _cToken) external view returns (uint256) {
+        return priceFeed.getUnderlyingPrice(_cToken);
+    }
+
+
+    funciton borrow(address _cToken, uint256 _decimals) external {
+
+        address[] memory cTokens = new address[](1);
+
+        cTokens[0] = address(cTokens);
+        uint256[] memory errors = comptroller.enterMarkets(cTokens);
+        require(errors[0] == 0, "comptroller.enterMarkets failed");
+
+     (uint256 error, uint256 liquidity, uint256 shortfall) =  comptroller.getAccountLiquidity(address(this));
+
+     require(error == 0, "error");
+     require(shortfall == 0, "shortfall > 0");
+     require(liquidity > 0, "liquidity = 0");
+
     }
 }
